@@ -1,0 +1,81 @@
+1985
+
+Open model inference API, web search, Linux sandboxes and agents behind
+one key. OpenAI Responses, OpenAI Chat Completions and Anthropic Messages
+compatible. No signup form, no prompts stored. Pay per token with a card
+or a USDC wallet. https://1985.sh
+
+Models
+
+  Kimi K3, GLM 5.3, GLM 5.3 Flash, Qwen 3.8 Max, DeepSeek V4.1 Flash,
+  MiniMax M3, GPT OSS 120B, Nemotron 3.5 Lightning
+  Prices per million tokens: https://1985.sh/models
+
+Get a key
+
+  ssh 1985.sh key                    free key, your SSH key is your identity
+  https://1985.sh/plans              monthly plans by card
+  https://1985.sh/docs/pay           per token from a USDC wallet, x402
+
+Use any OpenAI or Anthropic SDK
+
+  Code written for OpenAI, Anthropic, OpenRouter, Fireworks, Together or
+  Groq works by changing the base URL to https://api.1985.sh/v1
+
+  curl https://api.1985.sh/v1/responses \
+    -H "authorization: Bearer $KEY" \
+    -d '{"model":"kimi-k3","input":"hello"}'
+
+  from openai import OpenAI
+  client = OpenAI(base_url="https://api.1985.sh/v1", api_key=KEY)
+
+Endpoints
+
+  /v1/responses           OpenAI Responses
+  /v1/chat/completions    OpenAI Chat Completions
+  /v1/messages            Anthropic Messages
+  /v1/models              models and prices
+  /v1/search              web search with page text
+  /v1/sandboxes           Linux sandboxes for running code
+  /v1/agents              give a goal, get a result
+  https://mcp.1985.sh     MCP server for agents
+
+Command line
+
+  curl 1985.sh | sh                  macOS, Linux
+  irm 1985.sh | iex                  Windows
+  brew install 1985-sh/tap/1985      Homebrew
+  cargo install nineteen85           Rust
+
+  1985 run kimi-k3 "hello"
+  1985 models
+  1985 search "query"
+  1985 sandbox new | exec <id> <command> | rm <id>
+  1985 agent "goal"
+  1985 key free
+
+SDKs
+
+  pip install 1985                   Python, import nineteen85
+  npm install @1985-sh/sdk           TypeScript and JavaScript
+
+  Both are single files with no dependencies.
+
+Verify
+
+Each release at https://dl.1985.sh/v<version>/ has SHA256SUMS and
+SHA256SUMS.sig. The installers check both. To check by hand:
+
+  echo "release@1985.sh ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINGqKKKJUla6KqHWFdiZ96h1gRLZZJIkRZOxEW9JuyiF" > allowed_signers
+  ssh-keygen -Y verify -f allowed_signers -I release@1985.sh -n 1985 -s SHA256SUMS.sig < SHA256SUMS
+
+macOS binaries are signed and notarized with Apple team ZVNS4T4UVP.
+Windows binaries are Authenticode signed. Linux binaries, and macOS
+and Windows binaries before signing, are reproducible from the tagged
+source with rustc 1.101.0-nightly (19833af72 2026-10-20).
+
+Status https://status.1985.sh
+Security: report vulnerabilities privately to security@1985.sh.
+Contributing: this repository is synced from a private monorepo. Pull
+requests are not accepted.
+License: MIT. See LICENSE.
